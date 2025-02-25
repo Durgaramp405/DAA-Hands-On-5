@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-def median_of_three(arr, low, high):
+def median(arr, low, high):
     mid = (low + high) // 2
     a, b, c = arr[low], arr[mid], arr[high]
     if a > b:
@@ -22,8 +22,8 @@ def median_of_three(arr, low, high):
             return high
 
 def partition(arr, low, high):
-    pivot_index = median_of_three(arr, low, high)
-    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]  # Move pivot to end
+    pivot_index = median(arr, low, high)
+    arr[pivot_index], arr[high] = arr[high], arr[pivot_index]  
     pivot = arr[high]
     i = low - 1
     for j in range(low, high):
@@ -38,21 +38,21 @@ def quicksort(arr, low, high):
         pi = partition(arr, low, high)
         if pi - low < high - pi:
             quicksort(arr, low, pi - 1)
-            low = pi + 1  # Tail call optimization
+            low = pi + 1  
         else:
             quicksort(arr, pi + 1, high)
             high = pi - 1
 
 def best_case(size):
-    return list(range(size))  # Already sorted
+    return list(range(size)) 
 
 def worst_case(size):
-    return list(range(size, 0, -1))  # Reversed order
+    return list(range(size, 0, -1))  
 
 def average_case(size):
     return [random.randint(0, size) for _ in range(size)]
 
-def benchmark_quicksort(arr_sizes, case):
+def benchmark_of_quicksort(arr_sizes, case):
     times = []
     for size in arr_sizes:
         if case == 'best':
@@ -70,9 +70,9 @@ def benchmark_quicksort(arr_sizes, case):
 
 arr_sizes = [1000, 5000, 10000, 15000, 20000, 25000]
 
-best_case_times = benchmark_quicksort(arr_sizes, 'best')
-worst_case_times = benchmark_quicksort(arr_sizes, 'worst')
-average_case_times = benchmark_quicksort(arr_sizes, 'average')
+best_case_times = benchmark_of_quicksort(arr_sizes, 'best')
+worst_case_times = benchmark_of_quicksort(arr_sizes, 'worst')
+average_case_times = benchmark_of_quicksort(arr_sizes, 'average')
 
 plt.figure(figsize=(10, 6))
 plt.plot(arr_sizes, best_case_times, label='Best Case', marker='o')
